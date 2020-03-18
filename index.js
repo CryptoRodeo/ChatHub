@@ -1,13 +1,19 @@
-var express = require('express');
+let express = require('express');
 let app = express();
-var http = require('http').createServer(app);
-var socket = require('socket.io')(http);
+let partials = require('express-partials');
+let http = require('http').createServer(app);
+let socket = require('socket.io')(http);
+
+//middleware
+app.use(partials());
 app.use(express.static('node_modules'))
 app.use(express.static('public'));
 
+app.set('view engine', 'ejs');
+
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.render('pages/index.ejs');
 });
 
   socket.on('connection', function(socket){
@@ -16,6 +22,6 @@ app.get('/', function(req, res){
     });
   });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(8080, function(){
+  console.log('listening on *:8080');
 });
