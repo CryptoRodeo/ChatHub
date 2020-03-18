@@ -1,6 +1,7 @@
 <%- include("partials/header")%>
-<ul id="messages"></ul>
-<form action="">
-  <input id="m" autocomplete="off" /><button>Send</button>
+<h1>Welcome to WhatsApp mini</h1>
+<form action="/add-user" method="POST">
+  <input name="username" type="text">
+  <input type="submit">
 </form>
 <%- include("partials/footer")%>
