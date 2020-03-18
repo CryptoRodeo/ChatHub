@@ -11,4 +11,7 @@
             let message = `<li>${msg}</li>`; 
             document.querySelector("#messages").insertAdjacentHTML('beforeend', message)
         });
+        document.addEventListener('visibilitychange', (e) => {
+            console.log("user has disconnected");
+        })
 })();
