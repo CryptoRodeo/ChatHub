@@ -9,8 +9,9 @@ app.use(partials());
 app.use(express.static('node_modules'))
 app.use(express.static('public'));
 
-app.set('view engine', 'ejs');
 
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/../views');
 
 app.get('/', function(req, res){
   res.render('pages/index.ejs');
