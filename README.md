@@ -1,6 +1,7 @@
 ## WhatsApp Mini 💬
 
-## Current iteration / version: 1.0
+## version: 1.0
+### Warning: The code is currently...not up to par 🤢
 
 # Goals:
 - Broadcast a message to connected users when someone connects or disconnects. ✅
