@@ -1,4 +1,4 @@
-## Whatsapp Mini 💬
+## WhatsApp Mini 💬
 
 ## Current iteration / version: 1.0
 
