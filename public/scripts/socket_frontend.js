@@ -1,3 +1,5 @@
+
+let user = {};
 let socket = io();
 
 (() => {
@@ -6,12 +8,12 @@ let socket = io();
         document.querySelector("#usernameForm").addEventListener('submit', (e) => {
             e.preventDefault();
             let username = document.querySelector('#username');
-            console.log(username.value);
+            user.username = username.value;
             document.querySelector("#welcome-container").style.display = "none";
             document.querySelector("#welcome-container").style.height = 0;
             document.querySelector("#welcome-container").style.width = 0;
-            socket.emit('username', `${username.value}`);
-            socket.emit('new user', username.value);
+            socket.emit('username', `${user.username}`);
+            socket.emit('new user', user.username);
             document.querySelector("#online-users").insertAdjacentHTML('beforeend', username.value);
             return false;
         });
@@ -36,6 +38,11 @@ let socket = io();
         });
 
 })();
+
+
+document.querySelector("#m").addEventListener('keypress', (e) => {
+    socket.emit('user is typing', user.username);
+})
 
 socket.on('user has joined the chat', (user) => {
     let user_online = `<li>${user}</li>`;

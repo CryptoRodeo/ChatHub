@@ -42,7 +42,13 @@ socket.on('new user', (user) => {
     user.name = socket.username;
     io.emit('chat message', user);
   });
+
+  socket.on('user is typing', (user) => {
+    console.log(`${user} is typing`);
+  })
 });
+
+
 
 
 http.listen(8080, function(){
