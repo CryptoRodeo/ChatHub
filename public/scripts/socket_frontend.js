@@ -48,3 +48,7 @@ socket.on('user has joined the chat', (user) => {
     let user_online = `<li>${user}</li>`;
     document.querySelector("#online-users").insertAdjacentHTML('beforeend', user_online);
 });
+
+window.onbeforeunload = (e) => {
+    socket.emit('user has left', user.username);
+}
