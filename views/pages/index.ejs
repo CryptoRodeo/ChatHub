@@ -1,7 +1,4 @@
 <%- include("partials/header")%>
-<h1>Welcome to WhatsApp mini</h1>
-<form action="/add-user" method="POST">
-  <input name="username" type="text">
-  <input type="submit">
-</form>
+<%- include("./welcome"); %>
+<%- include("./chat.ejs"); %>
 <%- include("partials/footer")%>
