@@ -6,11 +6,13 @@ let socket = io();
         document.querySelector("#usernameForm").addEventListener('submit', (e) => {
             e.preventDefault();
             let username = document.querySelector('#username');
-            socket.emit('username', `${username.value}`);
             console.log(username.value);
             document.querySelector("#welcome-container").style.display = "none";
             document.querySelector("#welcome-container").style.height = 0;
             document.querySelector("#welcome-container").style.width = 0;
+            socket.emit('username', `${username.value}`);
+            socket.emit('new user', username.value);
+            document.querySelector("#online-users").insertAdjacentHTML('beforeend', username.value);
             return false;
         });
     }
@@ -34,3 +36,8 @@ let socket = io();
         });
 
 })();
+
+socket.on('user has joined the chat', (user) => {
+    let user_online = `<li>${user}</li>`;
+    document.querySelector("#online-users").insertAdjacentHTML('beforeend', user_online);
+});

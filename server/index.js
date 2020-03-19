@@ -32,13 +32,16 @@ io.on('connection', (socket) => {
     useradded = true;
 });
 
+socket.on('new user', (user) => {
+  socket.broadcast.emit('user has joined the chat', user);
+});
+
   socket.on('chat message', function(msg){
     let user = {};
     user.message = msg;
     user.name = socket.username;
     io.emit('chat message', user);
   });
-
 });
 
 
