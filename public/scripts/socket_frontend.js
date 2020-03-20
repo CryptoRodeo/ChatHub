@@ -46,6 +46,11 @@ let socket = io();
 
 })();
 
+
+document.querySelector("#m").addEventListener('keypress', (e) => {
+    socket.emit('user is typing', user.username);
+})
+
 socket.on('user has joined the chat', (user) => {
     let user_online = `<li>${user}</li>`;
     online_users.insertAdjacentHTML('beforeend', user_online);
