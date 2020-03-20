@@ -1,18 +1,30 @@
+import  elements  from './app_elements.js';
+
+const {
+        username_form, 
+        username_input,
+        welcome_container,
+        users_online,
+        chat_form,
+        message_input,
+        message_box
+    } = elements;
 let socket = io();
+
 
 (() => {
     if(document.querySelector("#usernameForm"))
     {
-        document.querySelector("#usernameForm").addEventListener('submit', (e) => {
+            username_form.addEventListener('submit', (e) => {
             e.preventDefault();
-            let username = document.querySelector('#username');
-            console.log(username.value);
-            document.querySelector("#welcome-container").style.display = "none";
-            document.querySelector("#welcome-container").style.height = 0;
-            document.querySelector("#welcome-container").style.width = 0;
-            socket.emit('username', `${username.value}`);
-            socket.emit('new user', username.value);
-            document.querySelector("#online-users").insertAdjacentHTML('beforeend', username.value);
+            let username = username_input.value;
+            console.log(username_input.value);
+            welcome_container.style.display = "none";
+            welcome_container.style.height = 0;
+            welcome_container.style.width = 0;
+            socket.emit('username', `${username_input.value}`);
+            socket.emit('new user', username_input.value);
+            users_online.insertAdjacentHTML('beforeend', username_input.value);
             return false;
         });
     }
@@ -20,24 +32,21 @@ let socket = io();
 
 
 (()=> {
-    document.querySelector("#chatform").addEventListener('submit', (e) => {
+        chat_form.addEventListener('submit', (e) => {
         e.preventDefault();
-        let submit_button = document.querySelector("#m");
-        socket.emit('chat message', submit_button.value);
-        submit_button.value = '';
+        socket.emit('chat message', message_input.value);
+        message_input.value = '';
         return false;
     });
 
         socket.on('chat message', (user) => {
-            console.log(user);
-            console.log("message transmitted");
             let message = `<li>${user.name}: ${user.message}</li>`;
-            document.querySelector("#messages").insertAdjacentHTML('beforeend', message);
+            message_box.insertAdjacentHTML('beforeend', message);
         });
 
 })();
 
 socket.on('user has joined the chat', (user) => {
     let user_online = `<li>${user}</li>`;
-    document.querySelector("#online-users").insertAdjacentHTML('beforeend', user_online);
+    online_users.insertAdjacentHTML('beforeend', user_online);
 });
