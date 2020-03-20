@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
 });
 
 socket.on('new user', (user) => {
-  socket.broadcast.emit('user has joined the chat', user);
+  io.emit('user has joined the chat', user);
 });
 
   socket.on('chat message', function(msg){
@@ -52,11 +52,6 @@ socket.on('new user', (user) => {
     socket.disconnect();
   });
 });
-
-
-
-
-
 
 http.listen(8080, function(){
   console.log('listening on *:8080');
