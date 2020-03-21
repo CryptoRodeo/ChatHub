@@ -14,12 +14,13 @@ export const hide_welcome_container = () => {
 
 export const insert_new_online_user = (username) => {
     let markup = `<li>${username}</li>`;
-        users_online.insertAdjacentHTML('beforeend', markup);
+       // users_online.insertAdjacentHTML('beforeend', markup);
 }
 
 export const send_message = (user) => {
-    let message = `<li>${user.name}: ${user.message}</li>`;
+    let message = `<li class="message">${user.name}: ${user.message}</li>`;
     message_box.insertAdjacentHTML('beforeend', message);
+    message_box.scrollTop += 50;
 }
 
 const set_style = (dom_element, style_property_obj) => {
