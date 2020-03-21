@@ -9,7 +9,7 @@ import {
     hide_welcome_container,
     insert_new_online_user,
     send_message
-} from './event_handlers.js';
+} from './dom_manipulation.js';
 
 let user = {};
 
@@ -18,8 +18,8 @@ let socket = io();
 username_form.addEventListener('submit', (e) => {
 e.preventDefault();
 hide_welcome_container();
+socket.emit('new user',username_input.value);
 socket.emit('username', `${username_input.value}`);
-socket.emit('new user', username_input.value);
 });
 
 chat_form.addEventListener('submit', (e) => {

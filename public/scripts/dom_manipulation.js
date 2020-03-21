@@ -13,7 +13,8 @@ export const hide_welcome_container = () => {
 }
 
 export const insert_new_online_user = (username) => {
-        users_online.insertAdjacentHTML('beforeend', username);
+    let markup = `<li>${username}</li>`;
+        users_online.insertAdjacentHTML('beforeend', markup);
 }
 
 export const send_message = (user) => {
