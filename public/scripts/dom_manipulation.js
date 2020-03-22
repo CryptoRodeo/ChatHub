@@ -18,7 +18,7 @@ export const insert_new_online_user = (username) => {
 }
 
 export const send_message = (user) => {
-    let message = `<li class="message">${user.name}: ${user.message}</li>`;
+    let message = `<li class="message"><div class="message-info">${user.name}: ${user.message}</div></li>`;
     message_box.insertAdjacentHTML('beforeend', message);
     message_box.scrollTop += 50;
 }
