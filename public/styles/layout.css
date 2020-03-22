@@ -28,7 +28,7 @@ body
 {
     display: flex;
     flex-direction: column;
-    height: 95%;
+    height: calc(100% - 50px);
     width: 100%;
     max-width: 960px;
 }
@@ -51,19 +51,12 @@ body
 {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    border-right: solid 5px var(--base--grey);
+    border-left: solid 5px var(--base--grey);
     flex: 1;
     width: 100%;
+   overflow-y: auto;
     background: url('../assets/images/papyrus.png');
-}
-
-#messenger__chat-container__chat-box
-{
-    flex: 1;
-    overflow-y: auto;
-    height: calc(100% - 4.444rem);
-   border-right: solid 5px var(--base--grey);
-   border-left: solid 5px var(--base--grey);
 }
 
 #messenger__chat-container_form
@@ -87,6 +80,18 @@ body
 {
     padding: 10px;
     border: none;
+}
+
+.messenger__chat-container__chat-box__message
+{
+    padding: 20px;
+    margin-bottom: 5px;
+    background-color: var(--base--grey);
+}
+
+.messenger__chat-container__chat-box__message:nth-of-type(even)
+{
+    background-color: var(--base--blue);
 }
 
 #messenger__chat-container_form__button

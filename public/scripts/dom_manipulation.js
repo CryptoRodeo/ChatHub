@@ -18,9 +18,9 @@ export const insert_new_online_user = (username) => {
 }
 
 export const send_message = (user) => {
-    let message = `<li class="message"><div class="message-info">${user.name}: ${user.message}</div></li>`;
+    let message = `<div class="messenger__chat-container__chat-box__message">${user.name}: ${user.message}</div>`;
     message_box.insertAdjacentHTML('beforeend', message);
-    message_box.scrollTop += 50;
+    message_box.scrollTop += 100;
 }
 
 const set_style = (dom_element, style_property_obj) => {
