@@ -12,7 +12,7 @@ export const hide_welcome_container = () => {
     });
 }
 
-export const insert_new_online_user = (name) => {
+export const insert_new_online_user = (user) => {
     let markup = `<p>${user.name}</p>`;
     users_online.insertAdjacentHTML('beforeend', markup);
 }

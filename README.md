@@ -13,5 +13,5 @@
 - Clean & familiar UI ✅
 
 
-# Small Demo
+# Small Demo of WhatsApp Mini V2
 ![demo of the application](demo_gif.gif "Small App Demo")

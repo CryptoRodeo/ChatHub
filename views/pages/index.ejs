@@ -2,7 +2,8 @@
 <%- include("./welcome.ejs")%>
 <section id="messenger">
         <header id="messenger__header">
-            <h1 id="messenger__header__heading">💬</h1>
+            <h1 id="messenger__header__heading"><span id="messenger__header__heading__user-count"></span> participants</h1>
+            <p id="messenger__header__participants-online">users online</p>
         </header>
         <%- include("./chat.ejs"); %>  
 </section>

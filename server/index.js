@@ -18,6 +18,8 @@ app.use(session({secret: 'i got nothing to hide', resave:false, saveUninitialize
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/../views');
 
+let users_online = [];
+
 app.get('/', function(req, res){
   res.render('pages/index.ejs');
 });
@@ -35,7 +37,9 @@ socket.on('new user', (user) => {
   if(useradded) return;
   socket.user = user;
   useradded = true;
-  io.emit('user has joined the chat', socket.user);
+
+  // io.emit('user has joined the chat', socket.user);
+  io.emit('display new user', socket.user);
 });
 
   socket.on('chat message', function(msg){
@@ -54,5 +58,6 @@ socket.on('new user', (user) => {
 });
 
 http.listen(8080, function(){
+  io.emit('show all online users');
   console.log('listening on *:8080');
 });
