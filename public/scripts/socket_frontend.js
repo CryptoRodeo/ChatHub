@@ -15,13 +15,13 @@ let user = {};
 
 let socket = io();
 
-/** username_form.addEventListener('submit', (e) => {
+username_form.addEventListener('submit', (e) => {
 e.preventDefault();
 hide_welcome_container();
-socket.emit('new user',username_input.value);
-socket.emit('username', `${username_input.value}`);
+user.name = username_input.value;
+socket.emit('new user',user);
+insert_new_online_user(user);
 });
-**/
 
 chat_form.addEventListener('submit', (e) => {
 e.preventDefault();
@@ -39,4 +39,4 @@ message_input.addEventListener('keypress', (e) => {
 
 // socket.on('user has joined the chat', (user) => {
 //    insert_new_online_user(user); 
-//}); 
+// }); 

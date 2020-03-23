@@ -12,13 +12,20 @@ export const hide_welcome_container = () => {
     });
 }
 
-export const insert_new_online_user = (username) => {
-    let markup = `<li>${username}</li>`;
-       // users_online.insertAdjacentHTML('beforeend', markup);
+export const insert_new_online_user = (name) => {
+    let markup = `<p>${user.name}</p>`;
+    users_online.insertAdjacentHTML('beforeend', markup);
 }
 
 export const send_message = (user) => {
-    let message = `<div class="messenger__chat-container__chat-box__message">${user.name}: ${user.message}</div>`;
+
+    let message = `
+        <div class="messenger__chat-container__chat-box__message">
+            <div class="messenger__chat-container__chat-box__message-info">
+                <span class="messenger__chat-container__chat-box__message-username">${user.name}<span><span class="messenger__chat-container__chat-box__message-data" >: ${user.message}</span>
+            </div>
+        </div>`;
+
     message_box.insertAdjacentHTML('beforeend', message);
     message_box.scrollTop += 100;
 }

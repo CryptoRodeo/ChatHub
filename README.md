@@ -11,3 +11,7 @@
 - Show who’s online.✅
 - Add private messaging.
 - Clean & familiar UI ✅
+
+
+# Small Demo
+![demo of the application](demo_gif.gif "Small App Demo")

@@ -15,7 +15,6 @@ app.use(express.urlencoded());
 app.use(session({secret: 'i got nothing to hide', resave:false, saveUninitialized: false}));
 
 
-
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/../views');
 
@@ -33,18 +32,19 @@ io.on('connection', (socket) => {
 });
 
 socket.on('new user', (user) => {
-  io.emit('user has joined the chat', user);
+  if(useradded) return;
+  socket.user = user;
+  useradded = true;
+  io.emit('user has joined the chat', socket.user);
 });
 
   socket.on('chat message', function(msg){
-    let user = {};
-    user.message = msg;
-    user.name = socket.username;
-    io.emit('chat message', user);
+    socket.user.message = msg;
+    io.emit('chat message', socket.user);
   });
 
   socket.on('user is typing', (user) => {
-    console.log(`${user} is typing`);
+    //console.log(`${user} is typing`);
   });
 
   socket.on('user has left', (username) => {
