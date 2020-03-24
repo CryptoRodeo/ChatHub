@@ -20,31 +20,31 @@ app.set('views', __dirname + '/../views');
 
 let users_online = [];
 
+let user = {};
+
 app.get('/', function(req, res){
   res.render('pages/index.ejs');
 });
 
 io.on('connection', (socket) => {
+
   let useradded = false;
-  
-  socket.on('username', (name) => {
-    if(useradded) return;
-    socket.username = name;
-    useradded = true;
-});
 
-socket.on('new user', (user) => {
+socket.on('new user', (username) =>{ 
+
+  socket.broadcast.emit("new participant");
   if(useradded) return;
-  socket.user = user;
+  socket.username = username;
   useradded = true;
-
-  // io.emit('user has joined the chat', socket.user);
   io.emit('display new user', socket.user);
 });
 
-  socket.on('chat message', function(msg){
-    socket.user.message = msg;
-    io.emit('chat message', socket.user);
+  socket.on('chat message', (message_details) =>
+  {
+    let {current_user, message} = message_details;
+    current_user.username = socket.username;
+    current_user.message = message;
+    io.emit('chat message', current_user);
   });
 
   socket.on('user is typing', (user) => {

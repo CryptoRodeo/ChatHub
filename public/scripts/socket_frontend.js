@@ -8,34 +8,41 @@ import  {
 import {
     hide_welcome_container,
     insert_new_online_user,
-    send_message
+    send_message,
+    alert_of_new_user
 } from './dom_manipulation.js';
 
-let user = {};
+let current_user = {};
 
 let socket = io();
 
 username_form.addEventListener('submit', (e) => {
 e.preventDefault();
 hide_welcome_container();
-user.name = username_input.value;
-socket.emit('new user',user);
+let username = username_input.value;
+socket.emit('new user', username);
 });
 
 
 chat_form.addEventListener('submit', (e) => {
 e.preventDefault();
-socket.emit('chat message', message_input.value);
+let message = message_input.value;
+socket.emit('chat message', {current_user, message});
 message_input.value = '';
 });
 
 
 socket.on('display new user', (user) => {
-    insert_new_online_user(user);
+    //insert_new_online_user(user);
 });
         
 socket.on('chat message', (user) => {
     send_message(user);
+});
+
+
+socket.on("new participant", () => {
+    alert_of_new_user();
 });
 
 socket.on('show all online users', () => {
@@ -43,7 +50,7 @@ socket.on('show all online users', () => {
 })
 
 message_input.addEventListener('keypress', (e) => {
-    socket.emit('user is typing', user.username);
+    socket.emit('user is typing', current_user.username);
 });
 
 // socket.on('user has joined the chat', (user) => {

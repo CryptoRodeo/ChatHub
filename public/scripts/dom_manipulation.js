@@ -12,9 +12,13 @@ export const hide_welcome_container = () => {
     });
 }
 
+export const alert_of_new_user = () => {
+    let alert = '<span class="participant_alert">A new participant has joined the chat!<span>';
+    message_box.insertAdjacentHTML('beforeend', alert); 
+}
 export const insert_new_online_user = (user) => {
-    let markup = `<p>${user.name}</p>`;
-    users_online.insertAdjacentHTML('beforeend', markup);
+    //let markup = `<p>${user.name}</p>`;
+    //users_online.insertAdjacentHTML('beforeend', markup);
 }
 
 export const send_message = (user) => {
@@ -22,7 +26,7 @@ export const send_message = (user) => {
     let message = `
         <div class="messenger__chat-container__chat-box__message">
             <div class="messenger__chat-container__chat-box__message-info">
-                <span class="messenger__chat-container__chat-box__message-username">${user.name}<span><span class="messenger__chat-container__chat-box__message-data" >: ${user.message}</span>
+                <span class="messenger__chat-container__chat-box__message-username">${user.username}:<span><p class="messenger__chat-container__chat-box__message-data" >${user.message}</p>
             </div>
         </div>`;
 
