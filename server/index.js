@@ -18,10 +18,6 @@ app.use(session({secret: 'i got nothing to hide', resave:false, saveUninitialize
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/../views');
 
-let users_online = [];
-
-let user = {};
-
 app.get('/', function(req, res){
   res.render('pages/index.ejs');
 });
@@ -36,7 +32,7 @@ socket.on('new user', (username) =>{
   if(useradded) return;
   socket.username = username;
   useradded = true;
-  io.emit('display new user', socket.user);
+  io.emit('display new user', socket.username);
 });
 
   socket.on('chat message', (message_details) =>

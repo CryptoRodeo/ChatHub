@@ -16,9 +16,9 @@ export const alert_of_new_user = () => {
     let alert = '<span class="participant_alert">A new participant has joined the chat!<span>';
     message_box.insertAdjacentHTML('beforeend', alert); 
 }
-export const insert_new_online_user = (user) => {
-    //let markup = `<p>${user.name}</p>`;
-    //users_online.insertAdjacentHTML('beforeend', markup);
+export const insert_new_online_user = (username) => {
+    let markup = `<p>${username}</p>`;
+    users_online.insertAdjacentHTML('beforeend', markup);
 }
 
 export const send_message = (user) => {

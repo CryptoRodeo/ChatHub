@@ -32,8 +32,8 @@ message_input.value = '';
 });
 
 
-socket.on('display new user', (user) => {
-    //insert_new_online_user(user);
+socket.on('display new user', (username) => {
+    insert_new_online_user(username);
 });
         
 socket.on('chat message', (user) => {
