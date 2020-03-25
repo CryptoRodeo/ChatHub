@@ -28,12 +28,13 @@ io.on('connection', (socket) => {
 
   let useradded = false;
 
-socket.on('new user', (username) =>{ 
+socket.on('new user', (new_user) =>{ 
   socket.broadcast.emit("new participant");
   if(useradded) return;
-  socket.username = username;
+  new_user.id = socket.id;
+  active_users.push(new_user);
   useradded = true;
-  active_users.push(username);
+  io.emit('update user info', new_user);
   io.emit('display new user', active_users);
 });
 
@@ -49,14 +50,21 @@ socket.on('new user', (username) =>{
     //console.log(`${user} is typing`);
   });
 
-  socket.on('user has left', (username) => {
-    console.log(`${username} has left the chat`);
+  socket.on('user has left', (removed_user) => {
     socket.disconnect();
   });
 
+socket.on('update user list' ,(new_user_list) => {
+  active_users = new_user_list;
 });
 
+socket.on('disconnecting', () => {
+  let disconnected_user_id = socket.id;
+  io.emit('remove user', { disconnected_user_id, active_users});
+});
+});
+
+
 http.listen(8080, function(){
-  io.emit('show all online users');
   console.log('listening on *:8080');
 });

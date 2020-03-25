@@ -12,8 +12,6 @@ export const hide_welcome_container = () => {
     });
 }
 
-
-let active_users = [];
 export const alert_of_new_user = () => {
     let alert = '<span class="participant_alert">A new participant has joined the chat!<span>';
     message_box.insertAdjacentHTML('beforeend', alert); 
@@ -23,7 +21,7 @@ export const insert_new_online_user = (active_users, displayed_online) => {
     if(displayed_online)
     {
         let newest_user = retrieve_newest_user(active_users);
-        let markup = `<p>${newest_user}</p>`;
+        let markup = `<p class="user_online" id=${newest_user.id}>${newest_user.username}</p>`;
         users_online.insertAdjacentHTML('beforeend',markup);
     }
     else
@@ -58,9 +56,15 @@ const set_style = (dom_element, style_property_obj) => {
     }
 }
 
+export const update_user_list = (removed_user_id, active_users) => {
+    active_users = active_users.filter(user => user.id != removed_user_id);
+    users_online.removeChild(document.getElementById(removed_user_id));
+    return active_users;
+}
+
 let render_full_user_list = (active_users) => {
     active_users.forEach((user) => {
-    let markup = `<p>${user}</p>`;
+    let markup = `<p class="user_online" id=${user.id}>${user.username}</p>`;
     users_online.insertAdjacentHTML('beforeend', markup);
     });
 }
