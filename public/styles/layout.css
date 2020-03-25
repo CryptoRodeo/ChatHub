@@ -210,6 +210,8 @@ body
     background-color: var(--base--blue);
     color: #fff;
     height: 4.44rem;
+    font-size: 24px;
+    line-height: 2.22rem;
 }
 
 #users__online__list

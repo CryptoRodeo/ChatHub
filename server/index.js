@@ -14,6 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(session({secret: 'i got nothing to hide', resave:false, saveUninitialized: false}));
 
+let active_users = [];
+
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/../views');
@@ -27,12 +29,12 @@ io.on('connection', (socket) => {
   let useradded = false;
 
 socket.on('new user', (username) =>{ 
-
   socket.broadcast.emit("new participant");
   if(useradded) return;
   socket.username = username;
   useradded = true;
-  io.emit('display new user', socket.username);
+  active_users.push(username);
+  io.emit('display new user', active_users);
 });
 
   socket.on('chat message', (message_details) =>
@@ -51,6 +53,7 @@ socket.on('new user', (username) =>{
     console.log(`${username} has left the chat`);
     socket.disconnect();
   });
+
 });
 
 http.listen(8080, function(){
