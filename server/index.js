@@ -56,7 +56,6 @@ socket.on('new user', (new_user) =>{
     socket.broadcast.emit('user stopped typing', socket.id);
   })
 
-
 socket.on('update user list' ,(new_user_list) => {
   active_users = new_user_list;
 });

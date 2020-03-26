@@ -1,16 +1,13 @@
 <%- include("partials/header")%>
 <%- include("./welcome.ejs")%>
-<section id="users__online">
-<h4 id="users__online__heading">Users Online</h4>
-<div id="users__online__list">
-
-</div>
-
-</section>
+<header id="messenger__header">
+            <h2 id="messenger__header__heading">ChatHub 💬</h2>
+</header>
 <section id="messenger">
-        <header id="messenger__header">
-            <h1 id="messenger__header__heading"></h1>
-        </header>
+    <section id="users__online">
+    <div id="users__online__list">
+    </div>
+    </section>
         <%- include("./chat.ejs"); %>  
 </section>
 <%- include("partials/footer")%>
