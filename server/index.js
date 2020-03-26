@@ -4,6 +4,7 @@ let partials = require('express-partials');
 let http = require('http').createServer(app);
 let io = require('socket.io')(http);
 let session = require('express-session');
+//let { active_users } = require('./modules/users');
 
 
 //middleware
@@ -14,8 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(session({secret: 'i got nothing to hide', resave:false, saveUninitialized: false}));
 
-let active_users = [];
-
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/../views');
@@ -24,9 +23,12 @@ app.get('/', function(req, res){
   res.render('pages/index.ejs');
 });
 
+let active_users;
+
 io.on('connection', (socket) => {
 
-  let useradded = false;
+  active_users = active_users || [];
+let useradded = false;
 
 socket.on('new user', (new_user) =>{ 
   socket.broadcast.emit("new participant");
@@ -60,16 +62,14 @@ socket.on('update user list' ,(new_user_list) => {
 });
 
 socket.on('user has left', () => {
+  console.log('left');
   let disconnected_user_id = socket.id;
   io.emit('remove user', { disconnected_user_id, active_users}); 
-})
-socket.on('reconnect' , () => {
-  let disconnected_user_id = socket.id;
-  io.emit('remove user', { disconnected_user_id, active_users});
 });
 
-socket.on('disconnecting', () => {
+socket.on('reconnect' , () => {
   let disconnected_user_id = socket.id;
+  console.log('reconnect');
   io.emit('remove user', { disconnected_user_id, active_users});
 });
 

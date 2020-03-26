@@ -24,7 +24,7 @@ export const insert_new_online_user = (active_users, displayed_online) => {
     if(displayed_online)
     {
         let newest_user = retrieve_newest_user(active_users);
-        let markup = `<p class="user_online" id=${newest_user.id}>${newest_user.name}<span id="${newest_user.id}-typing" class="typing-alert"></span></p>`
+        let markup = `<p class="user_online" id=${newest_user.id}>${newest_user.name}<icon id="${newest_user.id}-typing" class="typing-alert"></icon></p>`
         users_online.insertAdjacentHTML('beforeend',markup);
     }
     else
@@ -54,7 +54,9 @@ export const start_typing_notification = (user_id) => {
 
 export const stop_typing_notification = (user_id) => {
     let typing_alert = document.getElementById(`${user_id}-typing`);
-    typing_alert.innerHTML = '';
+    setTimeout( () => {
+        typing_alert.innerHTML = '';
+    }, 2000);
 }
 
 export const detect_user_leaving = () => {
@@ -71,17 +73,14 @@ const set_style = (dom_element, style_property_obj) => {
 }
 
 export const update_user_list = (removed_user_id, active_users) => {
-    active_users = active_users.filter(user => user.id != removed_user_id);
-    if(document.getElementById(removed_user_id))
-    {
-        users_online.removeChild(document.getElementById(removed_user_id));
-    }
-    return active_users;
+    if(!document.getElementById(removed_user_id)) return;
+    users_online.removeChild(document.getElementById(removed_user_id));
+    return active_users.filter(user => user.id != removed_user_id);
 }
 
 let render_full_user_list = (active_users) => {
     active_users.forEach((user) => {
-    let markup = `<p class="user_online" id=${user.id}>${user.name}<span id="${user.id}-typing" class="typing-alert"></span></p>`; users_online.insertAdjacentHTML('beforeend', markup); });
+    let markup = `<p class="user_online" id=${user.id}>${user.name}<icon id="${user.id}-typing" class="typing-alert"></icon></p>`; users_online.insertAdjacentHTML('beforeend', markup); });
    }
 
 let retrieve_newest_user = (array) => { return array[array.length - 1];}

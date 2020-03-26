@@ -58,9 +58,13 @@ socket.on("new participant", () => {
 
 socket.on('remove user', (users) =>
 {
+    if(current_user)
+    {
+
     let {disconnected_user_id, active_users} = users;
     let updated_list = update_user_list(disconnected_user_id, active_users);
     socket.emit('update user list' ,updated_list);
+    }
 });
 
 socket.on('user is typing', (user_id) => {
@@ -80,5 +84,7 @@ message_input.addEventListener('keypress', (e) => {
 });
 
 message_input.addEventListener('keyup', (e) => {
-    socket.emit('user stopped typing');
+    setTimeout(() => {
+        socket.emit('user stopped typing');
+    },2000);
 })
