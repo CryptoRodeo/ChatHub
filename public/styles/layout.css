@@ -107,7 +107,7 @@ body
     flex-direction: column;
     height: calc(100% - 50px);
     width: 100%;
-    max-width: 960px;
+    max-width: 660px;
 }
 
 #messenger__header
@@ -198,6 +198,8 @@ body
     background-color: var(--base--grey);
     display: flex;
     flex-direction: column;
+    max-width: 200px;
+    width: 100%;
 }
 
 #users__online *
@@ -205,16 +207,25 @@ body
     padding: 20px;
 }
 
+#users__online__list .typing-alert
+{
+    padding: 0px;
+}
+
 #users__online__heading
 {
     background-color: var(--base--blue);
     color: #fff;
     height: 4.44rem;
-    font-size: 24px;
     line-height: 2.22rem;
 }
 
 #users__online__list
 {
     overflow-y: auto;
+}
+
+.typing-alert
+{
+    padding: 0px;
 }

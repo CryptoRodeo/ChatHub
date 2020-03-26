@@ -10,7 +10,9 @@ import {
     insert_new_online_user,
     send_message,
     alert_of_new_user,
-    update_user_list
+    update_user_list,
+    stop_typing_notification,
+    start_typing_notification
 } from './dom_manipulation.js';
 
 let current_user = {};
@@ -23,8 +25,7 @@ let socket = io();
 username_form.addEventListener('submit', (e) => {
 e.preventDefault();
 hide_welcome_container();
-current_user.username = username_input.value;
-console.log(current_user.username);
+current_user.name = username_input.value;
 socket.emit('new user', current_user);
 });
 
@@ -60,16 +61,24 @@ socket.on('remove user', (users) =>
     let {disconnected_user_id, active_users} = users;
     let updated_list = update_user_list(disconnected_user_id, active_users);
     socket.emit('update user list' ,updated_list);
-})
+});
+
+socket.on('user is typing', (user_id) => {
+    start_typing_notification(user_id);
+});
+
+socket.on('user stopped typing', (user_id) => {
+   stop_typing_notification(user_id);
+});
 
   window.addEventListener('beforeunload',(e) => {
-      if(current_user.id)
-      {
-        socket.emit('user has left', current_user);
-      }
+        socket.emit('user has left');
   });
 
-
 message_input.addEventListener('keypress', (e) => {
-    socket.emit('user is typing', current_user.username);
+    socket.emit('user is typing');
 });
+
+message_input.addEventListener('keyup', (e) => {
+    socket.emit('user stopped typing');
+})

@@ -46,24 +46,34 @@ socket.on('new user', (new_user) =>{
     io.emit('chat message', current_user);
   });
 
-  socket.on('user is typing', (user) => {
-    //console.log(`${user} is typing`);
+  socket.on('user is typing', () => {
+    socket.broadcast.emit('user is typing', (socket.id));
   });
 
-  socket.on('user has left', (removed_user) => {
-    socket.disconnect();
-  });
+  socket.on('user stopped typing', () => {
+    socket.broadcast.emit('user stopped typing', socket.id);
+  })
+
 
 socket.on('update user list' ,(new_user_list) => {
   active_users = new_user_list;
+});
+
+socket.on('user has left', () => {
+  let disconnected_user_id = socket.id;
+  io.emit('remove user', { disconnected_user_id, active_users}); 
+})
+socket.on('reconnect' , () => {
+  let disconnected_user_id = socket.id;
+  io.emit('remove user', { disconnected_user_id, active_users});
 });
 
 socket.on('disconnecting', () => {
   let disconnected_user_id = socket.id;
   io.emit('remove user', { disconnected_user_id, active_users});
 });
-});
 
+});
 
 http.listen(8080, function(){
   console.log('listening on *:8080');

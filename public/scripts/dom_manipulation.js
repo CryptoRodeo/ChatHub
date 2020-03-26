@@ -12,6 +12,9 @@ export const hide_welcome_container = () => {
     });
 }
 
+let currently_typing = false;
+
+
 export const alert_of_new_user = () => {
     let alert = '<span class="participant_alert">A new participant has joined the chat!<span>';
     message_box.insertAdjacentHTML('beforeend', alert); 
@@ -21,7 +24,7 @@ export const insert_new_online_user = (active_users, displayed_online) => {
     if(displayed_online)
     {
         let newest_user = retrieve_newest_user(active_users);
-        let markup = `<p class="user_online" id=${newest_user.id}>${newest_user.username}</p>`;
+        let markup = `<p class="user_online" id=${newest_user.id}>${newest_user.name}<span id="${newest_user.id}-typing" class="typing-alert"></span></p>`
         users_online.insertAdjacentHTML('beforeend',markup);
     }
     else
@@ -35,12 +38,23 @@ export const send_message = (user) => {
     let message = `
         <div class="messenger__chat-container__chat-box__message">
             <div class="messenger__chat-container__chat-box__message-info">
-                <span class="messenger__chat-container__chat-box__message-username">${user.username}:<span><p class="messenger__chat-container__chat-box__message-data" >${user.message}</p>
+                <span class="messenger__chat-container__chat-box__message-username">${user.name}:<span><p class="messenger__chat-container__chat-box__message-data" >${user.message}</p>
             </div>
         </div>`;
 
     message_box.insertAdjacentHTML('beforeend', message);
     message_box.scrollTop += 100;
+}
+
+
+export const start_typing_notification = (user_id) => {
+    let typing_alert = document.getElementById(`${user_id}-typing`);
+    typing_alert.innerHTML = '💬';
+}
+
+export const stop_typing_notification = (user_id) => {
+    let typing_alert = document.getElementById(`${user_id}-typing`);
+    typing_alert.innerHTML = '';
 }
 
 export const detect_user_leaving = () => {
@@ -58,15 +72,16 @@ const set_style = (dom_element, style_property_obj) => {
 
 export const update_user_list = (removed_user_id, active_users) => {
     active_users = active_users.filter(user => user.id != removed_user_id);
-    users_online.removeChild(document.getElementById(removed_user_id));
+    if(document.getElementById(removed_user_id))
+    {
+        users_online.removeChild(document.getElementById(removed_user_id));
+    }
     return active_users;
 }
 
 let render_full_user_list = (active_users) => {
     active_users.forEach((user) => {
-    let markup = `<p class="user_online" id=${user.id}>${user.username}</p>`;
-    users_online.insertAdjacentHTML('beforeend', markup);
-    });
-}
+    let markup = `<p class="user_online" id=${user.id}>${user.name}<span id="${user.id}-typing" class="typing-alert"></span></p>`; users_online.insertAdjacentHTML('beforeend', markup); });
+   }
 
 let retrieve_newest_user = (array) => { return array[array.length - 1];}
