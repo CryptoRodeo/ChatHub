@@ -38,8 +38,9 @@ socket.on("new participant", () => { event.alert_of_new_user(); });
 
 socket.on('remove user', (users) =>
 {
-    let {disconnected_user_id, user_list} = users;
-    let updated_list = event.update_user_list(disconnected_user_id, user_list);
+    let {socket_id, user_list} = users;
+    let updated_list = event.update_user_list(socket_id, user_list);
+    console.log(updated_list);
     socket.emit('update user list' ,updated_list);
 });
 
@@ -48,7 +49,9 @@ socket.on('user is typing', (user_id) => { event.start_typing_notification(user_
 socket.on('user stopped typing', (user_id) => { event.stop_typing_notification(user_id); });
 
 elements.message_input.addEventListener('keypress', (e) => { socket.emit('user is typing'); });
-    
+
+//window.addEventListener('beforeunload', () => {  socket.emit('disconnecting'); });
+
 elements.message_input.addEventListener('keyup', (e) => {
     setTimeout(() => {
         socket.emit('user stopped typing');

@@ -4,7 +4,6 @@ let partials = require('express-partials');
 let http = require('http').createServer(app);
 let io = require('socket.io')(http);
 let session = require('express-session');
-let UserList = require('./modules/users');
 
 //middleware
 app.use(partials());
@@ -22,18 +21,17 @@ app.get('/', function(req, res){
 let user_list;
 
 io.on('connection', (socket) => {
-
   let useradded = false;
-  user_list = user_list || new UserList();//stops socket reconnection from rendering this array null
+  user_list = user_list ||  [];
 
   socket.on('new user', (new_user) =>{ 
     if(useradded) return;
     
     socket.broadcast.emit("new participant");
     new_user.id = socket.id;
-    user_list.addUser(new_user);
+    user_list.push(new_user);
     useradded = true;
-    active_users = user_list.getUsers();
+    active_users = user_list
     io.emit('update user info', new_user);
     io.emit('display new user', active_users);
 });
@@ -49,13 +47,18 @@ socket.on('user is typing', () => { socket.broadcast.emit('user is typing', (soc
     
 socket.on('user stopped typing', () => { socket.broadcast.emit('user stopped typing', socket.id); });
     
-socket.on('update user list' , (new_user_list) => { user_list.updateList(new_user_list);  });
+socket.on('update user list' , (new_user_list) => { 
+  user_list = new_user_list
+});
 
-socket.on('reconnect' , () => {
-  let disconnected_user_id = socket.id;
-  active_users = user_list.getUsers();
-  io.emit('remove user', { disconnected_user_id, active_users});
+socket.on('disconnecting', () => {
+  if(!user_list) user_list = [];
+  remove_user(socket.id);
 });
 });
+
+let remove_user = (socket_id) => {
+  io.emit('remove user', { socket_id, user_list});
+}
 
 http.listen(8080, () => { console.log('listening on *:8080'); });
