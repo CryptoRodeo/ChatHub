@@ -1,4 +1,4 @@
-## ChatHub💬
+# ChatHub💬
 
 # Goals 🥅:
 - Broadcast a message to connected users when someone connects or disconnects. ✅
